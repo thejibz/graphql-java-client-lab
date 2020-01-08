@@ -17,6 +17,7 @@
         <module>graphql-spqr</module>
         <module>superhero_server</module>
         <module>superhero_client</module>
+        <module>generate-graphql-client-maven-plugin</module>
     </modules>
 
     <properties>
