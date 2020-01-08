@@ -1,2 +1,8 @@
 # microprofile-graphql-client
-PoC for a microprofile graphql client in Java
+Maven plugin to generate a MicroProfile GraphQL client in Java
+
+# Steps to build & run locally
+1. graphql-spqr ```mvn clean install``` to install the graphql-spqr version "1.0-microprofile-proto" locally
+2. superhero_server ``mvn clean install -Pthorntail`` to start the superhero graphql server using thorntail
+
+
