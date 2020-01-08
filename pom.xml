@@ -16,9 +16,11 @@
     <modules>
         <module>graphql-spqr</module>
         <module>superhero_server</module>
+        <module>superhero_client</module>
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <microprofile-graphql.version>1.0-M4</microprofile-graphql.version>
         <cdi-api.version>2.0.2</cdi-api.version>
     </properties>
