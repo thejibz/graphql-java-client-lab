@@ -42,10 +42,8 @@ public class Main {
                         .members(m -> m.name())
                 );
 
-
         QueryQuery query = Operations.query(q -> q
                 .allHeroesIn(searchArgs, queryArgs)
-                .allHeroes(a -> a.name())
         );
         //.apply(q -> System.out.println(q.toString()))
         //.execute(client);
@@ -54,6 +52,7 @@ public class Main {
         GraphQLClient client = new GraphQLClientImpl(() -> "http://localhost:8080/graphql");
 
         QueryResponse response = client.execute(query);
+        response.getData().getAllHeroesIn().get(0).getName();
 
         LOGGER.info(response.prettyPrintJson());
     }

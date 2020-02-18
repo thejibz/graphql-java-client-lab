@@ -35,15 +35,48 @@
             <version>2.2.1</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby-complete</artifactId>
+            <version>9.2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>graphql_java_gen_adobe</artifactId>
+            <version>0.0.1</version>
+            <type>gem</type>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>graphql_schema</artifactId>
+            <version>0.1.6</version>
+            <type>gem</type>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>json</artifactId>
+            <version>2.3.0</version>
+            <type>gem</type>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Add ruby gems to our package -->
+            <plugin>
+                <groupId>de.saumya.mojo</groupId>
+                <artifactId>gem-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <includeRubygemsInResources>true</includeRubygemsInResources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>initialize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Set the java version we want to use -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -72,5 +105,26 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/lib</directory>
+            </resource>
+        </resources>
     </build>
+
+    <repositories>
+        <repository>
+            <id>rubygems-proxy</id>
+            <name>Rubygems Proxy</name>
+            <url>http://rubygems-proxy.torquebox.org/releases</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
