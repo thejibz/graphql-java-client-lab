@@ -1,6 +1,7 @@
 require 'graphql_java_gen_adobe'
 require 'graphql_schema'
 require 'json'
+require 'fileutils'
 
 def generate(pathToSchema, licenseHeaderFilePath, outputPackageName, outputDirPath)
     puts "### WORKDIR: #{Dir.pwd}"
@@ -9,6 +10,10 @@ def generate(pathToSchema, licenseHeaderFilePath, outputPackageName, outputDirPa
     pathToSchema = pathToSchema.gsub!(File::ALT_SEPARATOR, File::SEPARATOR) if File::ALT_SEPARATOR
     licenseHeaderFilePath = licenseHeaderFilePath.gsub!(File::ALT_SEPARATOR, File::SEPARATOR) if File::ALT_SEPARATOR
     outputDirPath = outputDirPath.gsub!(File::ALT_SEPARATOR, File::SEPARATOR) if File::ALT_SEPARATOR
+    #
+
+    ## Create the outputDirPath if it doesn't exist
+    FileUtils.mkdir_p outputDirPath
     #
 
     ## Parse the graphql schema
@@ -28,5 +33,5 @@ def generate(pathToSchema, licenseHeaderFilePath, outputPackageName, outputDirPa
           imports: ['java.math.BigDecimal'],
         ),
       ]
-    ).save_granular("#{Dir.pwd}/target")
+    ).save_granular(outputDirPath)
 end

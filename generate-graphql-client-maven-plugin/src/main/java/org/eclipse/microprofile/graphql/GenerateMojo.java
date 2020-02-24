@@ -60,7 +60,7 @@ public class GenerateMojo extends AbstractMojo {
 
         ScriptingContainer container = new ScriptingContainer();
 
-        Object receiver = container.runScriptlet(new BufferedReader(new FileReader("src/lib/graphql-java-generator/generator.rb")), "src/main/ruby/generator.rb");
+        Object receiver = container.runScriptlet(new BufferedReader(new FileReader("src/main/ruby/generator.rb")), "src/main/ruby/generator.rb");
         Object[] args = new Object[4];
         args[0] = pathToSchema.getCanonicalPath();
         args[1] = licenseHeaderFilePath.getCanonicalPath();
