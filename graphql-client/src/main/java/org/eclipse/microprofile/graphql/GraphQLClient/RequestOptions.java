@@ -12,7 +12,7 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient;
+package org.eclipse.microprofile.graphql.GraphQLClient;
 
 import com.google.gson.Gson;
 import org.apache.http.Header;

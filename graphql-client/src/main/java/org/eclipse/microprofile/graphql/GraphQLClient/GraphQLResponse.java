@@ -12,11 +12,28 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient;
+package org.eclipse.microprofile.graphql.GraphQLClient;
 
-/**
- * Represents the allowed and supported HTTP methods to send GraphQL requests.
- */
-public enum HttpMethod {
-    POST, GET
+import java.util.List;
+
+public class GraphQLResponse<T, U> {
+
+    protected T data;
+    protected List<U> errors;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public List<U> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<U> errors) {
+        this.errors = errors;
+    }
 }

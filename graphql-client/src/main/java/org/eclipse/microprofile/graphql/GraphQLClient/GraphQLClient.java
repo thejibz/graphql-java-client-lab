@@ -12,17 +12,11 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient;
-
-import com.shopify.graphql.support.SchemaViolationError;
-import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryQuery;
-import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryResponse;
+package org.eclipse.microprofile.graphql.GraphQLClient;
 
 import java.lang.reflect.Type;
 
 public interface GraphQLClient {
-
-    QueryResponse execute(QueryQuery query) throws SchemaViolationError;
 
     /**
      * Executes the given GraphQL request and deserializes the response data based on the types T and U.
@@ -45,13 +39,13 @@ public interface GraphQLClient {
      * List&lt;String&gt; data = response.getData();
      * </pre>
      * 
+     * @param <T> The generic type of the 'data' object in the JSON GraphQL response.
+     * @param <U> The generic type of the elements of the 'errors' array in the JSON GraphQL response.
+     *
      * @param request The GraphQL request.
      * @param typeOfT The type of the expected GraphQL response 'data' field.
      * @param typeOfU The type of the elements of the expected GraphQL response 'errors' field.
-     * 
-     * @param <T> The generic type of the 'data' object in the JSON GraphQL response.
-     * @param <U> The generic type of the elements of the 'errors' array in the JSON GraphQL response.
-     * 
+     *
      * @return A GraphQL response.
      * 
      * @exception RuntimeException if the GraphQL HTTP request does not return 200 or if the JSON response cannot be parsed or deserialized.
@@ -79,14 +73,14 @@ public interface GraphQLClient {
      * List&lt;String&gt; data = response.getData();
      * </pre>
      * 
+     * @param <T> The generic type of the 'data' object in the JSON GraphQL response.
+     * @param <U> The generic type of the elements of the 'errors' array in the JSON GraphQL response.
+     *
      * @param request The GraphQL request.
      * @param typeOfT The type of the expected GraphQL response 'data' field.
      * @param typeOfU The type of the elements of the expected GraphQL response 'errors' field.
      * @param options An object holding options that can be set when executing the request.
-     * 
-     * @param <T> The generic type of the 'data' object in the JSON GraphQL response.
-     * @param <U> The generic type of the elements of the 'errors' array in the JSON GraphQL response.
-     * 
+     *
      * @return A GraphQL response.
      * 
      * @exception RuntimeException if the GraphQL HTTP request does not return 200 or if the JSON response cannot be parsed or deserialized.

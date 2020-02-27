@@ -105,11 +105,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/lib</directory>
-            </resource>
-        </resources>
     </build>
 
     <repositories>

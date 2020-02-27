@@ -12,9 +12,9 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.impl;
+package org.eclipse.microprofile.graphql.GraphQLClient.impl;
 
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.HttpMethod;
+import org.eclipse.microprofile.graphql.GraphQLClient.HttpMethod;
 
 public interface GraphqlClientConfiguration {
 

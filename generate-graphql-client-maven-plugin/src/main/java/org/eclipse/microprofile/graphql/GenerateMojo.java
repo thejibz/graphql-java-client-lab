@@ -14,8 +14,13 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.PACKAGE)
 public class GenerateMojo extends AbstractMojo {
@@ -50,39 +55,62 @@ public class GenerateMojo extends AbstractMojo {
 
 
     private void generateDTOClasses() throws IOException, ScriptException {
+        getLog().info("### generate-graphql-client :: generate DTO :: BEGIN ###");
         getLog().info("pathToSchema: " + pathToSchema.getCanonicalPath());
         getLog().info("licenseHeaderFilePath: " + licenseHeaderFilePath.getCanonicalPath());
         getLog().info("outputPackageName: " + outputPackageName);
         getLog().info("outputDirPath: " + outputDirPath.getCanonicalPath());
 
-        // How to call ruby ?? => JRuby https://dior.ics.muni.cz/~makub/ruby/
+        // For debug purpose
         this.listScriptingEngines();
 
+        // How to call Ruby from Java: https://github.com/jruby/jruby/wiki/RedBridge
+        // Here we use the "Core" approach (vs JSR223 or Apache BSF)
         ScriptingContainer container = new ScriptingContainer();
 
-        Object receiver = container.runScriptlet(new BufferedReader(new FileReader("src/main/ruby/generator.rb")), "src/main/ruby/generator.rb");
+        InputStream rubyGeneratorInputStream = getClass().getResourceAsStream("/generator.rb");
+
+        Object receiver = container.runScriptlet(new BufferedReader(new InputStreamReader(rubyGeneratorInputStream)), "src/main/ruby/generator.rb");
         Object[] args = new Object[4];
         args[0] = pathToSchema.getCanonicalPath();
         args[1] = licenseHeaderFilePath.getCanonicalPath();
         args[2] = outputPackageName;
         args[3] = outputDirPath.getCanonicalPath();
+
         container.callMethod(receiver, "generate", args);
 
-//        ScriptEngine jruby = new ScriptEngineManager().getEngineByName("jruby");
-//        jruby.put("pathToSchema", pathToSchema.getCanonicalPath());
-//        jruby.put("licenseHeaderFilePath", licenseHeaderFilePath);
-//        jruby.put("outputPackageName", outputPackageName);
-//        jruby.put("outputDirPath", outputDirPath);
-//        jruby.eval(new BufferedReader(new FileReader("src/lib/graphql-java-generator/generator.rb")));
-//        jruby.eval("generate($pathToSchema, $licenseHeaderFilePath, $outputPackageName, $outputDirPath)");
+        getLog().info("### generate-graphql-client :: generate DTO :: END ###");
     }
 
-    private void generateClientClasses() {
-        /*
-            generate the classes that allows to make network calls to the graphql server,
-            using the DTO classes generated previously.
-         */
+    private void generateClientClass() throws IOException {
+        getLog().info("### generate-graphql-client :: generate GQL Client :: BEGIN ###");
+
+        InputStream gqlClientInputStream = getClass().getResourceAsStream("/GQLClient.java");
+        Path gqlClientClassDestinationPath = Paths.get(outputDirPath.toString() + "/GQLClient.java");
+        Files.copy(gqlClientInputStream, gqlClientClassDestinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+        getLog().info("### generate-graphql-client :: generate GQL Client :: END ###");
     }
+
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("### generate-graphql-client :: BEGIN ###");
+
+        try {
+            this.generateDTOClasses();
+            this.generateClientClass();
+        } catch (IOException | ScriptException e) {
+            /*
+                Unrecoverable exceptions here so we rethrow a MojoExecutionException.
+                MojoFailureException in the other hand, is for exceptions that can be ignored for the build to continue.
+                Cf. https://books.sonatype.com/mvnref-book/reference/writing-plugins-sect-custom-plugin.html
+             */
+            getLog().error(e);
+            throw new MojoExecutionException(e.getMessage());
+        }
+
+        getLog().info("### generate-graphql-client :: END ###");
+    }
+
 
     /**
      * List all the scripting engine available to the plugin.
@@ -91,29 +119,12 @@ public class GenerateMojo extends AbstractMojo {
     private void listScriptingEngines() {
         ScriptEngineManager mgr = new ScriptEngineManager();
         for (ScriptEngineFactory factory : mgr.getEngineFactories()) {
-            getLog().info("ScriptEngineFactory Info");
-            getLog().info(String.format("\tScript Engine: %s (%s)\n", factory.getEngineName(), factory.getEngineVersion()));
-            getLog().info(String.format("\tLanguage: %s (%s)\n", factory.getLanguageName(), factory.getLanguageVersion()));
+            getLog().debug("ScriptEngineFactory Info:");
+            getLog().debug(String.format("\tScript Engine: %s (%s)\n", factory.getEngineName(), factory.getEngineVersion()));
+            getLog().debug(String.format("\tLanguage: %s (%s)\n", factory.getLanguageName(), factory.getLanguageVersion()));
             for (String name : factory.getNames()) {
-                getLog().info( String.format("\tEngine Alias: %s\n", name));
+                getLog().debug( String.format("\tEngine Alias: %s\n", name));
             }
         }
-    }
-
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("### generate-graphql-client :: START ###");
-
-        try {
-            this.generateDTOClasses();
-        } catch (IOException | ScriptException e) {
-            /*
-                Unrecoverable exceptions here so we rethrow a MojoExecutionException.
-                MojoFailureException in the other hand, is for exceptions that can be ignored for the build to continue.
-                Cf. https://books.sonatype.com/mvnref-book/reference/writing-plugins-sect-custom-plugin.html
-             */
-            throw new MojoExecutionException(e.getMessage());
-        }
-
-        getLog().info("### generate-graphql-client :: END ###");
     }
 }

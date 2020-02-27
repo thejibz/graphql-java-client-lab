@@ -12,11 +12,10 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.impl;
+package org.eclipse.microprofile.graphql.GraphQLClient.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.shopify.graphql.support.SchemaViolationError;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -42,13 +41,11 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.GraphQLRequest;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.GraphQLResponse;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.GraphQLClient;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.HttpMethod;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.RequestOptions;
-import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryQuery;
-import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryResponse;
+import org.eclipse.microprofile.graphql.GraphQLClient.GraphQLClient;
+import org.eclipse.microprofile.graphql.GraphQLClient.GraphQLRequest;
+import org.eclipse.microprofile.graphql.GraphQLClient.GraphQLResponse;
+import org.eclipse.microprofile.graphql.GraphQLClient.HttpMethod;
+import org.eclipse.microprofile.graphql.GraphQLClient.RequestOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,42 +83,6 @@ public class GraphQLClientImpl implements GraphQLClient {
 
         client = buildHttpClient();
         gson = new Gson();
-    }
-
-    @Override
-    public QueryResponse execute(QueryQuery query) throws SchemaViolationError {
-        LOGGER.debug("Executing GraphQL query: " + query.toString());
-
-        GraphQLRequest request = new GraphQLRequest(query.toString());
-        HttpResponse httpResponse;
-        try {
-            httpResponse = client.execute(buildRequest(request, null));
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to send GraphQL request", e);
-        }
-
-        StatusLine statusLine = httpResponse.getStatusLine();
-        if (HttpStatus.SC_OK == statusLine.getStatusCode()) {
-            HttpEntity entity = httpResponse.getEntity();
-            String json;
-            try {
-                json = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to read HTTP response content", e);
-            }
-
-            QueryResponse response = QueryResponse.fromJson(json);
-
-            // We log GraphQL errors because they might otherwise get "silently" unnoticed
-            if (response.getErrors() != null) {
-                LOGGER.warn("GraphQL request {} returned some errors {}", request.getQuery(), response.getErrors());
-            }
-
-            return response;
-        } else {
-            EntityUtils.consumeQuietly(httpResponse.getEntity());
-            throw new RuntimeException("GraphQL query failed with response code " + statusLine.getStatusCode());
-        }
     }
 
     @Override
@@ -199,7 +160,7 @@ public class GraphQLClientImpl implements GraphQLClient {
                 .build();
     }
 
-    private HttpUriRequest buildRequest(GraphQLRequest request, RequestOptions options) throws UnsupportedEncodingException {
+    protected HttpUriRequest buildRequest(GraphQLRequest request, RequestOptions options) throws UnsupportedEncodingException {
         HttpMethod httpMethod = this.httpMethod;
         if (options != null && options.getHttpMethod() != null) {
             httpMethod = options.getHttpMethod();

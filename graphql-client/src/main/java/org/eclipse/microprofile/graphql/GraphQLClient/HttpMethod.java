@@ -12,40 +12,11 @@
  *
  ******************************************************************************/
 
-package org.eclipse.microprofile.graphql.superhero_client.GraphQLClient;
+package org.eclipse.microprofile.graphql.GraphQLClient;
 
-public class GraphQLRequest {
-
-    protected String query;
-    protected String operationName;
-    protected Object variables;
-
-    public GraphQLRequest(String query) {
-        this.query = query;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    public String getOperationName() {
-        return operationName;
-    }
-
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
-
-    public Object getVariables() {
-        return variables;
-    }
-
-    public void setVariables(Object variables) {
-        this.variables = variables;
-    }
-
+/**
+ * Represents the allowed and supported HTTP methods to send GraphQL requests.
+ */
+public enum HttpMethod {
+    POST, GET
 }

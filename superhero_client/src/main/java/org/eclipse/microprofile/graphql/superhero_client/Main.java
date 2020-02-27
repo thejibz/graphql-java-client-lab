@@ -15,8 +15,7 @@
  */
 package org.eclipse.microprofile.graphql.superhero_client;
 
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.GraphQLClient;
-import org.eclipse.microprofile.graphql.superhero_client.GraphQLClient.impl.GraphQLClientImpl;
+import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.GQLClient;
 import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.Operations;
 import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryQuery;
 import org.eclipse.microprofile.graphql.superhero_client.SuperHeroAPI.QueryResponse;
@@ -28,9 +27,11 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello World!"); // Display the string.
 
+        testFork();
+    }
 
+    public static void testFork() throws Exception {
         QueryQuery.AllHeroesInArgumentsDefinition searchArgs = s -> s.city("Los Angeles, CA");
 
         SuperHeroQueryDefinition queryArgs = q -> q
@@ -45,15 +46,12 @@ public class Main {
         QueryQuery query = Operations.query(q -> q
                 .allHeroesIn(searchArgs, queryArgs)
         );
-        //.apply(q -> System.out.println(q.toString()))
-        //.execute(client);
 
 
-        GraphQLClient client = new GraphQLClientImpl(() -> "http://localhost:8080/graphql");
-
+        GQLClient client = new GQLClient(() -> "http://localhost:8080/graphql");
         QueryResponse response = client.execute(query);
-        response.getData().getAllHeroesIn().get(0).getName();
 
+        LOGGER.info(response.getData().getAllHeroesIn().get(0).getName());
         LOGGER.info(response.prettyPrintJson());
     }
 }
