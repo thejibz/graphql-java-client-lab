@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.eclipse.microprofile.graphql</groupId>
-    <artifactId>microprofile-graphql-client</artifactId>
+    <groupId>poc.graphql</groupId>
+    <artifactId>graphql-java-client-lab</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -17,8 +17,7 @@
         <module>graphql-spqr</module>
         <module>superhero_server</module>
         <module>superhero_client</module>
-        <module>generate-graphql-client-maven-plugin</module>
-        <module>GraphQL Client</module>
+        <module>jax-gs</module>
     </modules>
 
     <properties>
