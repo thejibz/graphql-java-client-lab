@@ -6,29 +6,28 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class InputObject extends LinkedHashMap<String, Object> implements IBuildable {
+public class ArgumentMap extends LinkedHashMap<String, Object> implements IBuildable {
+
     @SafeVarargs
-    public static InputObject inputObject(InputField... m) {
-        InputObject inputObject = new InputObject();
-        for(InputField field : m) {
-            inputObject.put(field.getKey(), field.getValue());
+    public static ArgumentMap args(Argument... args) {
+        ArgumentMap argumentMap = new ArgumentMap();
+        for(Argument argument : args) {
+            argumentMap.put(argument.getKey(), argument.getValue());
         }
 
-        return inputObject;
+        return argumentMap;
     }
 
     @Override
     public void build(StringBuilder builder) throws GraphQLBuilderException {
-        builder.append("{");
         int i = 0;
         for (Map.Entry<String, Object> entry : Collections.unmodifiableSet(this.entrySet())) {
-            InputField inputField = new InputField(entry.getKey(), entry.getValue());
-            inputField.build(builder);
+            Argument argument = new Argument(entry.getKey(), entry.getValue());
+            argument.build(builder);
             if (i < this.size() - 1) {
                 builder.append(", ");
             }
             i++;
         }
-        builder.append("}");
     }
 }

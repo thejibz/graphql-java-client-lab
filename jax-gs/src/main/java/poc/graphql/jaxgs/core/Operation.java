@@ -13,10 +13,18 @@ public class Operation implements IBuildable {
     }
 
     private Type type;
+    private String name;
     private List<Field> fields;
 
     public Operation(Type type) {
         this.type = type;
+        this.name = "";
+        this.fields = new ArrayList<>();
+    }
+
+    public Operation(Type type, String name) {
+        this.type = type;
+        this.name = name;
         this.fields = new ArrayList<>();
     }
 
@@ -24,19 +32,20 @@ public class Operation implements IBuildable {
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         switch (type) {
             case QUERY:
-                builder.append("query");
+                builder.append("query ");
                 break;
             case MUTATION:
-                builder.append("mutation");
+                builder.append("mutation ");
                 break;
             case SUBSCRIPTION:
-                builder.append("subscription");
+                builder.append("subscription ");
                 break;
             default:
                 throw new GraphQLBuilderException("Operation type must be one of QUERY, MUTATION or SUBSCRIPTION");
         }
 
-        builder.append(" { ");
+        builder.append(this.name);
+        builder.append("{");
         if (!this.fields.isEmpty()) {
             for (Field field : this.fields) {
                 if (field.getFields().isEmpty()) {
@@ -49,7 +58,7 @@ public class Operation implements IBuildable {
         } else {
             throw new GraphQLBuilderException("An operation must have at least one root query.");
         }
-        builder.append(" } ");
+        builder.append("}");
     }
 
 

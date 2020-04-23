@@ -11,6 +11,10 @@ public class GraphQLBuilder {
         this.operation = new Operation(type);
     }
 
+    public GraphQLBuilder(Operation.Type type, String name) {
+        this.operation = new Operation(type, name);
+    }
+
     public GraphQLBuilder addRootField(Field rootField) {
         this.operation.getFields().add(rootField);
 
