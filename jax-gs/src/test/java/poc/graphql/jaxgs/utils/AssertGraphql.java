@@ -25,7 +25,7 @@ public class AssertGraphql {
         try {
             parser.parseDocument(request);
         } catch (InvalidSyntaxException e) {
-            System.err.println(e.getSourcePreview());
+            System.err.println(request);
             throw (e);
         }
     }

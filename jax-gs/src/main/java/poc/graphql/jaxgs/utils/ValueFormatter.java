@@ -1,5 +1,6 @@
 package poc.graphql.jaxgs.utils;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 
 public class ValueFormatter {
@@ -11,6 +12,18 @@ public class ValueFormatter {
             _appendQuotedString(builder, (String) value);
         } else if (value instanceof LocalDate) {
             _appendQuotedString(builder, value.toString());
+        } else if (value.getClass().isArray()) {
+            builder.append("[");
+
+            int length = Array.getLength(value);
+            for (int i = 0; i < length; i++) {
+                builder.append(format(Array.get(value, i)));
+                if (i < length - 1) {
+                    builder.append(", ");
+                }
+            }
+
+            builder.append("]");
         } else {
             builder.append(value);
         }

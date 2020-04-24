@@ -21,10 +21,10 @@ public class Argument extends AbstractMap.SimpleEntry<String, Object> implements
         builder.append(this.getKey());
         builder.append(":");
         if (this.getValue() instanceof InputObject) {
-            var inputObject = (InputObject) this.getValue();
+            InputObject inputObject = (InputObject) this.getValue();
             inputObject.build(builder);
         } else {
-            // Arrays are automatically well formatted. No needs for  a special case.
+            // List are automatically well formatted. No needs for  a special case.
             builder.append(format(this.getValue()));
         }
     }

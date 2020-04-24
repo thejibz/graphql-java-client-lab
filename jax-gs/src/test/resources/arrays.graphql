@@ -1,0 +1,53 @@
+//                                                inputField("stringArray2D", new String[][]{
+//                                                                {"A1", "A2", "A3"},
+//                                                                {"B1", "B2", "B3"},
+//                                                                {"C1", "C2", "C3"}
+//                                                        }
+//                                                ),
+mutation scalarHolderMutation {
+    scalarHolder (scalarHolder:{
+        intPrimitive:1
+        intObject:2
+        shortPrimitive:3
+        shortObject:4
+        bytePrimitive:5
+        byteObject:6
+        booleanPrimitive:true
+        booleanObject:false
+        intPrimitiveId:7
+        integerObjectId:8
+        floatPrimitive:9.753
+        floatObject:10.78
+        charPrimitive:"h"
+        charObject:"e"
+        stringObject: "hello"
+        longPrimitive:11.123
+        longObject:12.456
+        doublePrimitive:17.789
+        doubleObject:18.159
+    }) {
+        intPrimitive
+        intObject
+        shortPrimitive
+        shortObject
+        bytePrimitive
+        byteObject
+        booleanPrimitive
+        booleanObject
+        intPrimitiveId
+        integerObjectId
+        floatPrimitive
+        floatObject
+        charPrimitive
+        charObject
+        charArray
+        longPrimitive
+        longObject
+        longPrimitiveId
+        longObjectId
+        formattedLongPrimitive
+        formattedLongObject
+        doublePrimitive
+        doubleObject
+    }
+}

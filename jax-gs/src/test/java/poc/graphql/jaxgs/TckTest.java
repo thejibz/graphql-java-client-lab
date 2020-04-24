@@ -48,6 +48,7 @@ public class TckTest {
 
     @Test
     @Ignore
+    // TODO
     public void addHeroToTeamWithVariables() throws IOException, URISyntaxException, GraphQLBuilderException {
         String expectedRequest = getResourceFileContent("addHeroToTeamWithVariables.graphql");
 
@@ -161,25 +162,113 @@ public class TckTest {
         String expectedRequest = getResourceFileContent("allHeroes.graphql");
 
         GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.QUERY, "allHeroes")
-                .addRootField(
-                        field("allHeroes",
-                                fields(
-                                        field("name"),
-                                        field("primaryLocation"),
-                                        field("superPowers"),
-                                        field("realName")
-                                )
-                        ));
+                .addRootField(field("allHeroes",
+                        fields(
+                                field("name"),
+                                field("primaryLocation"),
+                                field("superPowers"),
+                                field("realName")
+                        )
+                ));
 
         String generatedRequest = builder.build();
 
         assertSameRequests(expectedRequest, generatedRequest);
     }
 
+    @Test
+    public void basicScalarMutation() throws IOException, URISyntaxException, GraphQLBuilderException {
+        String expectedRequest = getResourceFileContent("scalars.graphql");
+
+        GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.MUTATION, "scalarHolderMutation")
+                .addRootField(
+                        field("scalarHolder",
+                                args(
+                                        arg("scalarHolder", inputObject(
+                                                inputField("shortPrimitive", 123),
+                                                inputField("shortObject", 123),
+                                                inputField("intPrimitive", 123456789),
+                                                inputField("intObject", 123456789),
+                                                inputField("longPrimitive", 123456789),
+                                                inputField("longObject", 123456789),
+                                                inputField("floatPrimitive", 123456.79),
+                                                inputField("floatObject", 123456.79),
+                                                inputField("doublePrimitive", 123456.789),
+                                                inputField("doubleObject", 123456.789),
+                                                inputField("bytePrimitive", 123),
+                                                inputField("byteObject", 123),
+                                                inputField("bigIntegerObject", 123456789),
+                                                inputField("bigDecimalObject", 123456.789),
+                                                inputField("booleanObject", false),
+                                                inputField("booleanPrimitive", false),
+                                                inputField("charObject", "c"),
+                                                inputField("charPrimitive", "c"),
+                                                inputField("stringObject", "123456789"),
+                                                inputField("dateObject", "2019-10-23"),
+                                                inputField("anotherDateObject", "2019-10-23"),
+                                                inputField("timeObject", "11:46:34.263"),
+                                                inputField("anotherTimeObject", "11:46:34.263"),
+                                                inputField("dateTimeObject", "2019-10-23T11:46:34.263"),
+                                                inputField("anotherDateTimeObject", "2019-10-23T11:46:34.263"),
+                                                inputField("id", "123456789"),
+                                                inputField("intPrimitiveId", 123456789),
+                                                inputField("longPrimitiveId", 123456789)
+                                        ))),
+                                fields(
+                                        field("shortPrimitive"),
+                                        field("shortObject"),
+
+                                        field("intPrimitive"),
+                                        field("intObject"),
+
+                                        field("longPrimitive"),
+                                        field("longObject"),
+
+                                        field("floatPrimitive"),
+                                        field("floatObject"),
+
+                                        field("doublePrimitive"),
+                                        field(" doubleObject"),
+
+                                        field("bytePrimitive"),
+                                        field("byteObject"),
+
+                                        field("bigIntegerObject"),
+
+                                        field("bigDecimalObject"),
+
+                                        field("booleanObject"),
+                                        field("booleanPrimitive"),
+
+                                        field("charObject"),
+                                        field("charPrimitive"),
+
+                                        field("stringObject"),
+
+                                        field("dateObject"),
+                                        field("anotherDateObject"),
+
+                                        field("timeObject"),
+                                        field("anotherTimeObject"),
+
+                                        field("dateTimeObject"),
+                                        field("anotherDateTimeObject"),
+
+                                        field("id"),
+                                        field("intPrimitiveId"),
+                                        field("longPrimitiveId")
+                                )
+                        )
+                );
+
+        String generatedRequest = builder.build();
+        assertSameRequests(expectedRequest, generatedRequest);
+    }
+
     private String getResourceFileContent(String resourceName) throws IOException, URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         Path filePath = Paths.get(classLoader.getResource(resourceName).toURI());
-        String content = Files.readString(filePath);
+        String content = new String(Files.readAllBytes(filePath));
 
         return content;
     }

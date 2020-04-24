@@ -47,16 +47,16 @@ public class Operation implements IBuildable {
         builder.append(this.name);
         builder.append("{");
         if (!this.fields.isEmpty()) {
-            for (Field field : this.fields) {
-                if (field.getFields().isEmpty()) {
-                    builder.append(field.getName());
+            for (Field rootField : this.fields) {
+                if (rootField.getFields().isEmpty()) {
+                    builder.append(rootField.getName());
                 } else {
-                    field.build(builder);
+                    rootField.build(builder);
                 }
                 builder.append(" ");
             }
         } else {
-            throw new GraphQLBuilderException("An operation must have at least one root query.");
+            throw new GraphQLBuilderException("An operation must have at least one root field.");
         }
         builder.append("}");
     }

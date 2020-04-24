@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>poc.graphql</groupId>
+    <groupId>poc.mp.graphql</groupId>
     <artifactId>graphql-java-client-lab</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
@@ -18,10 +18,13 @@
         <module>superhero_server</module>
         <module>superhero_client</module>
         <module>jax-gs</module>
+        <module>server</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
         <microprofile-graphql.version>1.0-M4</microprofile-graphql.version>
         <cdi-api.version>2.0.2</cdi-api.version>
     </properties>

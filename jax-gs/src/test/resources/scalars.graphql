@@ -1,0 +1,75 @@
+mutation scalarHolderMutation {
+    scalarHolder (scalarHolder: {
+        shortPrimitive: 123
+        shortObject: 123
+        intPrimitive: 123456789
+        intObject: 123456789
+        longPrimitive: 123456789
+        longObject: 123456789
+        floatPrimitive: 123456.79
+        floatObject: 123456.79
+        doublePrimitive: 123456.789
+        doubleObject: 123456.789
+        bytePrimitive: 123
+        byteObject: 123
+        bigIntegerObject: 123456789,
+        bigDecimalObject: 123456.789
+        booleanObject: false
+        booleanPrimitive: false
+        charObject: "c"
+        charPrimitive: "c"
+        stringObject: "123456789"
+        dateObject: "2019-10-23"
+        anotherDateObject: "2019-10-23"
+        timeObject: "11:46:34.263"
+        anotherTimeObject: "11:46:34.263"
+        dateTimeObject: "2019-10-23T11:46:34.263"
+        anotherDateTimeObject: "2019-10-23T11:46:34.263"
+        id: "123456789"
+        intPrimitiveId: 123456789
+        longPrimitiveId: 123456789
+    }) {
+        shortPrimitive
+        shortObject
+
+        intPrimitive
+        intObject
+
+        longPrimitive
+        longObject
+
+        floatPrimitive
+        floatObject
+
+        doublePrimitive
+        doubleObject
+
+        bytePrimitive
+        byteObject
+
+        bigIntegerObject
+
+        bigDecimalObject
+
+        booleanObject
+        booleanPrimitive
+
+        charObject
+        charPrimitive
+
+        stringObject
+
+        dateObject
+        anotherDateObject
+
+        timeObject
+        anotherTimeObject
+
+        dateTimeObject
+        anotherDateTimeObject
+
+        id
+        intPrimitiveId
+        longPrimitiveId
+    }
+}
