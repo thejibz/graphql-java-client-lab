@@ -9,20 +9,20 @@ public class ValueFormatter {
         StringBuilder builder = new StringBuilder();
 
         if (value instanceof String) {
-            _appendQuotedString(builder, (String) value);
+            _appendQuotedString(builder, String.valueOf(value));
+        } else if (value instanceof Character) {
+            _appendQuotedString(builder, String.valueOf(value));
         } else if (value instanceof LocalDate) {
-            _appendQuotedString(builder, value.toString());
+            _appendQuotedString(builder, String.valueOf(value));
         } else if (value.getClass().isArray()) {
-            builder.append("[");
-
             int length = Array.getLength(value);
+            builder.append("[");
             for (int i = 0; i < length; i++) {
                 builder.append(format(Array.get(value, i)));
                 if (i < length - 1) {
                     builder.append(", ");
                 }
             }
-
             builder.append("]");
         } else {
             builder.append(value);

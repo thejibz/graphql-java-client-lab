@@ -177,7 +177,7 @@ public class TckTest {
     }
 
     @Test
-    public void basicScalarMutation() throws IOException, URISyntaxException, GraphQLBuilderException {
+    public void scalars() throws IOException, URISyntaxException, GraphQLBuilderException {
         String expectedRequest = getResourceFileContent("scalars.graphql");
 
         GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.MUTATION, "scalarHolderMutation")
@@ -189,12 +189,12 @@ public class TckTest {
                                                 inputField("shortObject", 123),
                                                 inputField("intPrimitive", 123456789),
                                                 inputField("intObject", 123456789),
-                                                inputField("longPrimitive", 123456789),
-                                                inputField("longObject", 123456789),
-                                                inputField("floatPrimitive", 123456.79),
-                                                inputField("floatObject", 123456.79),
-                                                inputField("doublePrimitive", 123456.789),
-                                                inputField("doubleObject", 123456.789),
+                                                inputField("longPrimitive", 123456789L),
+                                                inputField("longObject", 123456789L),
+                                                inputField("floatPrimitive", 123456.79f),
+                                                inputField("floatObject", 123456.79f),
+                                                inputField("doublePrimitive", 123456.789d),
+                                                inputField("doubleObject", 123456.789d),
                                                 inputField("bytePrimitive", 123),
                                                 inputField("byteObject", 123),
                                                 inputField("bigIntegerObject", 123456789),
@@ -228,7 +228,7 @@ public class TckTest {
                                         field("floatObject"),
 
                                         field("doublePrimitive"),
-                                        field(" doubleObject"),
+                                        field("doubleObject"),
 
                                         field("bytePrimitive"),
                                         field("byteObject"),
@@ -257,6 +257,75 @@ public class TckTest {
                                         field("id"),
                                         field("intPrimitiveId"),
                                         field("longPrimitiveId")
+                                )
+                        )
+                );
+
+        String generatedRequest = builder.build();
+        assertSameRequests(expectedRequest, generatedRequest);
+    }
+
+    @Test
+    public void arrays() throws IOException, URISyntaxException, GraphQLBuilderException {
+        String expectedRequest = getResourceFileContent("arrays.graphql");
+
+        GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.QUERY, "arrayHolderQuery")
+                .addRootField(
+                        field("arrayHolder",
+                                args(
+                                        arg("arrayHolder", inputObject(
+                                                inputField("boolPrimitiveArray", new boolean[]{true, false, true}),
+                                                inputField("boolObjectArray", new Boolean[]{true, false, true}),
+
+                                                inputField("bytePrimitiveArray", new byte[] {0, 2, 3}),
+                                                inputField("byteObjectArray", new Byte[] {0, 2, 3}),
+
+                                                inputField("shortPrimitiveArray", new short[] {78, 789, 645}),
+                                                inputField("shortObjectArray", new Short[] {78, 789, 645}),
+
+                                                inputField("intPrimitiveArray", new int[] {78, 65, 12354}),
+                                                inputField("intObjectArray", new Integer[] {78, 65, 12354}),
+
+                                                inputField("longPrimitiveArray", new long[] {789L, 947894L, 1874448L}),
+                                                inputField("longObjectArray", new Long[] {789L, 947894L, 1874448L}),
+
+                                                inputField("floatPrimitiveArray", new float[] {1567.654f, 8765f, 123789456.1851f}),
+                                                inputField("floatObjectArray", new Float[] {1567.654f, 8765f, 123789456.1851f}),
+
+                                                inputField("doublePrimitiveArray", new double[] {789.3242d, 1815d, 98765421.654897d}),
+                                                inputField("doubleObjectArray", new Double[] {789.3242d, 1815d, 98765421.654897d}),
+
+                                                inputField("charPrimitiveArray", new char[] {'f', 'o', 'o'}),
+                                                inputField("charObjectArray", new Character[] {'f', 'o', 'o'}),
+
+                                                inputField("stringArray", new String[] {"foo", "bar", "baz"})
+                                        ))),
+                                fields(
+                                        field("boolPrimitiveArray"),
+                                        field("boolObjectArray"),
+
+                                        field("bytePrimitiveArray"),
+                                        field("byteObjectArray"),
+
+                                        field("shortPrimitiveArray"),
+                                        field("shortObjectArray"),
+
+                                        field("intPrimitiveArray"),
+                                        field("intObjectArray"),
+
+                                        field("longPrimitiveArray"),
+                                        field("longObjectArray"),
+
+                                        field("floatPrimitiveArray"),
+                                        field("floatObjectArray"),
+
+                                        field("doublePrimitiveArray"),
+                                        field("doubleObjectArray"),
+
+                                        field("charPrimitiveArray"),
+                                        field("charObjectArray"),
+
+                                        field("stringArray")
                                 )
                         )
                 );
