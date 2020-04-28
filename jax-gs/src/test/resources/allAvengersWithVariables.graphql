@@ -1,7 +1,0 @@
-query allAvengersWithVariable($team: String) {
-    allHeroesInTeam(team: $team) {
-        name
-        primaryLocation
-        superPowers
-    }
-}

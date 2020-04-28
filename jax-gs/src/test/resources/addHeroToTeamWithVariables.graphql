@@ -1,8 +1,0 @@
-mutation addHeroToTeam($heroName:String, $teamName:String) {
-    addHeroToTeam(hero: $heroName, team: $teamName) {
-        name
-        members {
-            name
-        }
-    }
-}

@@ -1,29 +1,29 @@
 package poc.graphql.jaxgs.utils;
 
+import poc.graphql.jaxgs.core.InputObject;
+import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
+
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 
 public class ValueFormatter {
 
-    public static String format(Object value) {
+    public static String format(Object value) throws GraphQLBuilderException {
         StringBuilder builder = new StringBuilder();
 
-        if (value instanceof String) {
-            _appendQuotedString(builder, String.valueOf(value));
-        } else if (value instanceof Character) {
-            _appendQuotedString(builder, String.valueOf(value));
-        } else if (value instanceof LocalDate) {
-            _appendQuotedString(builder, String.valueOf(value));
+        if (value == null) {
+            builder.append("null");
+        } else if (value instanceof InputObject) {
+            InputObject inputObject = (InputObject) value;
+            inputObject.build(builder);
         } else if (value.getClass().isArray()) {
-            int length = Array.getLength(value);
-            builder.append("[");
-            for (int i = 0; i < length; i++) {
-                builder.append(format(Array.get(value, i)));
-                if (i < length - 1) {
-                    builder.append(", ");
-                }
-            }
-            builder.append("]");
+            _appendArray(builder, value);
+        } else if (value instanceof String) {
+            _appendAsQuotedString(builder, String.valueOf(value));
+        } else if (value instanceof Character) {
+            _appendAsQuotedString(builder, String.valueOf(value));
+        } else if (value instanceof LocalDate) {
+            _appendAsQuotedString(builder, String.valueOf(value));
         } else {
             builder.append(value);
         }
@@ -31,7 +31,20 @@ public class ValueFormatter {
         return builder.toString();
     }
 
-    private static void _appendQuotedString(StringBuilder builder, String value) {
+    private static void _appendArray(StringBuilder builder, Object array) throws GraphQLBuilderException {
+        int length = Array.getLength(array);
+
+        builder.append("[");
+        for (int i = 0; i < length; i++) {
+            builder.append(format(Array.get(array, i)));
+            if (i < length - 1) {
+                builder.append(", ");
+            }
+        }
+        builder.append("]");
+    }
+
+    private static void _appendAsQuotedString(StringBuilder builder, String value) {
         builder.append('"');
         for (char c : value.toCharArray()) {
             switch (c) {

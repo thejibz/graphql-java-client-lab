@@ -23,6 +23,7 @@ public class GraphQLBuilder {
 
     public String build() throws GraphQLBuilderException {
         StringBuilder queryBuilder = new StringBuilder();
+
         this.operation.build(queryBuilder);
 
         return queryBuilder.toString();

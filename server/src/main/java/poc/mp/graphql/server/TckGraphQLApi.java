@@ -4,7 +4,7 @@ import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
 import poc.mp.graphql.server.models.ArrayHolder;
-import poc.mp.graphql.server.models.IntArrayHolder;
+import poc.mp.graphql.server.models.NestedObjectHolder;
 import poc.mp.graphql.server.models.ScalarHolder;
 
 /**
@@ -28,8 +28,8 @@ public class TckGraphQLApi {
         return arrayHolder;
     }
 
-    @Query
-    public IntArrayHolder intArrayHolder(IntArrayHolder intArrayHolder) {
-        return intArrayHolder;
+    @Mutation
+    public NestedObjectHolder nestedObjectHolder(NestedObjectHolder nestedObjectHolder) {
+        return nestedObjectHolder;
     }
 }

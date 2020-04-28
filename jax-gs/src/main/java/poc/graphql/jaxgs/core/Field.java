@@ -14,7 +14,7 @@ public class Field implements IBuildable {
 
 
     @SafeVarargs
-    public static <Field> List<Field> fields(Field... f) {
+    public static <Field> List<Field> selections(Field... f) {
         return asList(f);
     }
     public static Field field(String name) {
@@ -55,12 +55,14 @@ public class Field implements IBuildable {
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         builder.append(this.name);
 
+        // Field has arguments ?
         if (!this.arguments.isEmpty()) {
             builder.append("(");
             this.arguments.build(builder);
             builder.append(")");
         }
 
+        // Field has sub-fields ?
         if (!this.fields.isEmpty()) {
             builder.append("{");
             _buildFields(builder);

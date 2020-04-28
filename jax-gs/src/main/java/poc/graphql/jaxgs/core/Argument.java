@@ -20,12 +20,6 @@ public class Argument extends AbstractMap.SimpleEntry<String, Object> implements
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         builder.append(this.getKey());
         builder.append(":");
-        if (this.getValue() instanceof InputObject) {
-            InputObject inputObject = (InputObject) this.getValue();
-            inputObject.build(builder);
-        } else {
-            // List are automatically well formatted. No needs for  a special case.
-            builder.append(format(this.getValue()));
-        }
+        builder.append(format(this.getValue()));
     }
 }
