@@ -1,6 +1,5 @@
 package poc.graphql.jaxgs;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import poc.graphql.jaxgs.core.Operation;
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
@@ -13,55 +12,53 @@ import java.net.URISyntaxException;
 import static poc.graphql.jaxgs.core.Argument.arg;
 import static poc.graphql.jaxgs.core.ArgumentMap.args;
 import static poc.graphql.jaxgs.core.Field.field;
-import static poc.graphql.jaxgs.core.Field.selections;
-import static poc.graphql.jaxgs.core.InputField.inputField;
-import static poc.graphql.jaxgs.core.InputObject.inputObject;
+import static poc.graphql.jaxgs.core.Field.selection;
+import static poc.graphql.jaxgs.core.InputObject.object;
+import static poc.graphql.jaxgs.core.InputObjectField.prop;
 import static poc.graphql.jaxgs.utils.AssertGraphql.assertSameRequests;
 import static poc.graphql.jaxgs.utils.Utils.getResourceFileContent;
 
 public class ScalarsTest {
 
     @Test
-    @Ignore
     public void scalars() throws IOException, URISyntaxException, GraphQLBuilderException {
         String expectedRequest = getResourceFileContent(getClass(), "scalars.graphql");
 
-        GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.MUTATION, "scalarHolderMutation")
+        ClientBuilder builder = new ClientBuilder(Operation.Type.MUTATION, "scalarHolderMutation")
                 .addRootField(
                         field("scalarHolder",
                                 args(
-                                        arg("scalarHolder", inputObject(
-                                                inputField("booleanPrimitive", false),
-                                                inputField("booleanObject", Boolean.valueOf(true)),
+                                        arg("scalarHolder", object(
+                                                prop("booleanPrimitive", false),
+                                                prop("booleanObject", Boolean.valueOf(true)),
 
-                                                inputField("bytePrimitive", Byte.MIN_VALUE),
-                                                inputField("byteObject", Byte.valueOf(Byte.MAX_VALUE)),
+                                                prop("bytePrimitive", Byte.MIN_VALUE),
+                                                prop("byteObject", Byte.valueOf(Byte.MAX_VALUE)),
 
-                                                inputField("shortPrimitive", Short.MIN_VALUE),
-                                                inputField("shortObject", Short.valueOf(Short.MAX_VALUE)),
+                                                prop("shortPrimitive", Short.MIN_VALUE),
+                                                prop("shortObject", Short.valueOf(Short.MAX_VALUE)),
 
-                                                inputField("intPrimitive", Integer.MIN_VALUE),
-                                                inputField("intObject", Integer.valueOf(Integer.MAX_VALUE)),
+                                                prop("intPrimitive", Integer.MIN_VALUE),
+                                                prop("intObject", Integer.valueOf(Integer.MAX_VALUE)),
 
-                                                inputField("longPrimitive", Long.MIN_VALUE),
-                                                inputField("longObject", Long.valueOf(Long.MAX_VALUE)),
+                                                prop("longPrimitive", Long.MIN_VALUE),
+                                                prop("longObject", Long.valueOf(Long.MAX_VALUE)),
 
-                                                inputField("floatPrimitive", Float.MIN_VALUE),
-                                                inputField("floatObject", Float.valueOf(Float.MAX_VALUE)),
+                                                prop("floatPrimitive", Float.MIN_VALUE),
+                                                prop("floatObject", Float.valueOf(Float.MAX_VALUE)),
 
-                                                inputField("doublePrimitive", Double.MIN_VALUE),
-                                                inputField("doubleObject", Double.valueOf(Double.MAX_VALUE)),
+                                                prop("doublePrimitive", Double.MIN_VALUE),
+                                                prop("doubleObject", Double.valueOf(Double.MAX_VALUE)),
 
-                                                inputField("bigInteger", BigInteger.TEN),
-                                                inputField("bigDecimal", BigDecimal.TEN),
+                                                prop("bigInteger", BigInteger.TEN),
+                                                prop("bigDecimal", BigDecimal.TEN),
 
-                                                inputField("charPrimitive", Character.MIN_VALUE),
-                                                inputField("charObject", Character.valueOf(Character.MAX_VALUE)),
+                                                prop("charPrimitive", Character.MIN_VALUE),
+                                                prop("charObject", Character.valueOf(Character.MAX_VALUE)),
 
-
-                                                inputField("stringObject", "Hello World !")
+                                                prop("stringObject", "Hello World !")
                                         ))),
-                                selections(
+                                selection(
                                         field("booleanPrimitive"),
                                         field("booleanObject"),
 
@@ -95,7 +92,6 @@ public class ScalarsTest {
                 );
 
         String generatedRequest = builder.build();
-
         assertSameRequests(expectedRequest, generatedRequest);
     }
 }

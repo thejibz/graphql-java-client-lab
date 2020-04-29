@@ -1,14 +1,14 @@
 package poc.graphql.jaxgs.core;
 
-public class Argument {
+public class InputObjectField {
     private String name;
     private Object value;
 
-    public static Argument arg(String name, Object value) {
-        return new Argument(name, value);
+    public static InputObjectField prop(String name, Object value) {
+        return new InputObjectField(name, value);
     }
 
-    public Argument(String name, Object value) {
+    public InputObjectField(String name, Object value) {
         this.name = name;
         this.value = value;
     }

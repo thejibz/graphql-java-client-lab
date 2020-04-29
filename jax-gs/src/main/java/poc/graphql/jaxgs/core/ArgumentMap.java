@@ -2,32 +2,41 @@ package poc.graphql.jaxgs.core;
 
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ArgumentMap extends LinkedHashMap<String, Object> implements IBuildable {
+import static poc.graphql.jaxgs.utils.ValueFormatter.format;
+
+public class ArgumentMap implements IBuildable {
+    private LinkedHashMap<String, Object> map = new LinkedHashMap();
 
     @SafeVarargs
     public static ArgumentMap args(Argument... args) {
-        ArgumentMap argumentMap = new ArgumentMap();
-        for(Argument argument : args) {
-            argumentMap.put(argument.getKey(), argument.getValue());
-        }
+        return new ArgumentMap(args);
+    }
 
-        return argumentMap;
+    @SafeVarargs
+    public ArgumentMap(Argument... args) {
+        for (Argument argument : args) {
+            map.put(argument.getName(), argument.getValue());
+        }
     }
 
     @Override
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         int i = 0;
-        for (Map.Entry<String, Object> entry : Collections.unmodifiableSet(this.entrySet())) {
-            Argument argument = new Argument(entry.getKey(), entry.getValue());
-            argument.build(builder);
-            if (i < this.size() - 1) {
+        for (Map.Entry<String, Object> entry : this.map.entrySet()) {
+            builder.append(entry.getKey());
+            builder.append(":");
+            builder.append(format(entry.getValue()));
+            if (i < this.map.size() - 1) {
                 builder.append(", ");
             }
             i++;
         }
+    }
+
+    public boolean isEmpty() {
+        return this.map.isEmpty();
     }
 }

@@ -2,33 +2,52 @@ package poc.graphql.jaxgs.core;
 
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class InputObject extends LinkedHashMap<String, Object> implements IBuildable {
-    @SafeVarargs
-    public static InputObject inputObject(InputField... m) {
-        InputObject inputObject = new InputObject();
-        for(InputField field : m) {
-            inputObject.put(field.getKey(), field.getValue());
-        }
+import static poc.graphql.jaxgs.utils.ValueFormatter.format;
 
-        return inputObject;
+public class InputObject implements IBuildable, Cloneable {
+    private LinkedHashMap<String, Object> map = new LinkedHashMap();
+
+    @SafeVarargs
+    public static InputObject object(InputObjectField... inputObjectFields) {
+        return new InputObject(inputObjectFields);
+    }
+
+    @SafeVarargs
+    public InputObject(InputObjectField... m) {
+        for (InputObjectField field : m) {
+            this.map.put(field.getName(), field.getValue());
+        }
+    }
+
+    private InputObject(LinkedHashMap map) {
+        this.map = map;
     }
 
     @Override
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         builder.append("{");
         int i = 0;
-        for (Map.Entry<String, Object> entry : Collections.unmodifiableSet(this.entrySet())) {
-            InputField inputField = new InputField(entry.getKey(), entry.getValue());
-            inputField.build(builder);
-            if (i < this.size() - 1) {
+        for (Map.Entry<String, Object> entry : this.map.entrySet()) {
+            builder.append(entry.getKey());
+            builder.append(":");
+            builder.append(format(entry.getValue()));
+            if (i < this.map.entrySet().size() - 1) {
                 builder.append(", ");
             }
             i++;
         }
         builder.append("}");
+    }
+
+    @Override
+    public InputObject clone() {
+        return new InputObject((LinkedHashMap) this.map.clone());
+    }
+
+    public void add(InputObjectField prop) {
+        this.map.put(prop.getName(), prop.getValue());
     }
 }

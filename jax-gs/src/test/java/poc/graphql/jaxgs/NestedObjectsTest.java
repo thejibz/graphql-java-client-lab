@@ -11,9 +11,9 @@ import java.net.URISyntaxException;
 import static poc.graphql.jaxgs.core.Argument.arg;
 import static poc.graphql.jaxgs.core.ArgumentMap.args;
 import static poc.graphql.jaxgs.core.Field.field;
-import static poc.graphql.jaxgs.core.Field.selections;
-import static poc.graphql.jaxgs.core.InputField.inputField;
-import static poc.graphql.jaxgs.core.InputObject.inputObject;
+import static poc.graphql.jaxgs.core.Field.selection;
+import static poc.graphql.jaxgs.core.InputObjectField.prop;
+import static poc.graphql.jaxgs.core.InputObject.object;
 import static poc.graphql.jaxgs.utils.AssertGraphql.assertSameRequests;
 import static poc.graphql.jaxgs.utils.Utils.getResourceFileContent;
 
@@ -23,57 +23,56 @@ public class NestedObjectsTest {
     public void nestedObjects() throws IOException, URISyntaxException, GraphQLBuilderException {
         String expectedRequest = getResourceFileContent(getClass(), "nestedObjects.graphql");
 
-        InputObject baseObject_0 = inputObject(
-                inputField("level", 0),
-                inputField("name", "level 0"),
-                inputField("levelLineage", new byte[]{}),
-                inputField("nestedObjectLineage", new InputObject[]{})
+        InputObject baseObject_0 = object(
+                prop("level", 0),
+                prop("name", "level 0"),
+                prop("levelLineage", new byte[]{}),
+                prop("nestedObjectLineage", new InputObject[]{})
         );
-        InputObject baseObject_1 = inputObject(
-                inputField("level", 1),
-                inputField("name", "level 1"),
-                inputField("levelLineage", new byte[]{0}),
-                inputField("nestedObjectLineage", new InputObject[]{baseObject_0})
+        InputObject baseObject_1 = object(
+                prop("level", 1),
+                prop("name", "level 1"),
+                prop("levelLineage", new byte[]{0}),
+                prop("nestedObjectLineage", new InputObject[]{baseObject_0})
         );
-        InputObject baseObject_2 = inputObject(
-                inputField("level", 2),
-                inputField("name", "level 2"),
-                inputField("levelLineage", new byte[]{0, 1}),
-                inputField("nestedObjectLineage", new InputObject[]{baseObject_0, baseObject_1})
+        InputObject baseObject_2 = object(
+                prop("level", 2),
+                prop("name", "level 2"),
+                prop("levelLineage", new byte[]{0, 1}),
+                prop("nestedObjectLineage", new InputObject[]{baseObject_0, baseObject_1})
         );
-        InputObject baseObject_3 = inputObject(
-                inputField("level", 3),
-                inputField("name", "level 3"),
-                inputField("levelLineage", new byte[]{0, 1, 2}),
-                inputField("nestedObjectLineage", new InputObject[]{baseObject_0,baseObject_1, baseObject_2})
+        InputObject baseObject_3 = object(
+                prop("level", 3),
+                prop("name", "level 3"),
+                prop("levelLineage", new byte[]{0, 1, 2}),
+                prop("nestedObjectLineage", new InputObject[]{baseObject_0, baseObject_1, baseObject_2})
         );
 
         InputObject object_3 = (InputObject) baseObject_3.clone();
-        object_3.put("nestedObject", null);
+        object_3.add(prop("nestedObject", null));
 
         InputObject object_2 = (InputObject) baseObject_2.clone();
-        object_2.put("nestedObject", object_3);
+        object_2.add(prop("nestedObject", object_3));
 
         InputObject object_1 = (InputObject) baseObject_1.clone();
-        object_1.put("nestedObject", object_2);
+        object_1.add(prop("nestedObject", object_2));
 
         InputObject object_0 = (InputObject) baseObject_0.clone();
-        object_0.put("nestedObject", object_1);
+        object_0.add(prop("nestedObject", object_1));
 
-        GraphQLBuilder builder = new GraphQLBuilder(Operation.Type.MUTATION, "nestedObjects")
+        ClientBuilder builder = new ClientBuilder(Operation.Type.MUTATION, "nestedObjects")
                 .addRootField(
                         field("nestedObjectHolder",
                                 args(
                                         arg("nestedObjectHolder", object_0)
                                 ),
-                                selections(
+                                selection(
                                         field("nestedObjectHolder")
                                 )
                         )
                 );
 
         String generatedRequest = builder.build();
-
         assertSameRequests(expectedRequest, generatedRequest);
     }
 }
