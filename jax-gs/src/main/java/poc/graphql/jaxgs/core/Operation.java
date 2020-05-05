@@ -2,30 +2,36 @@ package poc.graphql.jaxgs.core;
 
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Operation implements IBuildable {
-    public enum Type {
-        QUERY,
-        MUTATION,
-        SUBSCRIPTION
-    }
+import static java.util.Arrays.asList;
 
+public class Operation implements IBuildable {
     private Type type;
     private String name;
     private List<Field> fields;
 
-    public Operation(Type type) {
-        this.type = type;
-        this.name = "";
-        this.fields = new ArrayList<>();
+    @SafeVarargs
+    public static List<Operation> operations(Operation... operations) {
+        return asList(operations);
+    }
+    public static Operation operation(Type type, List<Field> fields) {
+        return new Operation(type, fields);
+    }
+    public static Operation operation(Type type, String name, List<Field> fields) {
+        return new Operation(type, name, fields);
     }
 
-    public Operation(Type type, String name) {
+    public Operation(Type type, List<Field> fields) {
+        this.type = type;
+        this.name = "";
+        this.fields = fields;
+    }
+
+    public Operation(Type type, String name, List<Field> fields) {
         this.type = type;
         this.name = name;
-        this.fields = new ArrayList<>();
+        this.fields = fields;
     }
 
     @Override
@@ -47,13 +53,13 @@ public class Operation implements IBuildable {
         builder.append(this.name);
         builder.append("{");
         if (!this.fields.isEmpty()) {
-            for (Field rootField : this.fields) {
-                if (rootField.getFields().isEmpty()) {
-                    builder.append(rootField.getName());
-                } else {
-                    rootField.build(builder);
+            Field[] rootFields = this.fields.toArray(new Field[0]);
+            for (int i = 0; i < rootFields.length; i++) {
+                Field rootField = rootFields[i];
+                rootField.build(builder);
+                if (i < rootFields.length - 1) {
+                    builder.append(" ");
                 }
-                builder.append(" ");
             }
         } else {
             throw new GraphQLBuilderException("An operation must have at least one root field.");
@@ -61,6 +67,11 @@ public class Operation implements IBuildable {
         builder.append("}");
     }
 
+    public enum Type {
+        QUERY,
+        MUTATION,
+        SUBSCRIPTION
+    }
 
     public Type getType() {
         return type;

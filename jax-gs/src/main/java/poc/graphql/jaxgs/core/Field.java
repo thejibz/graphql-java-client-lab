@@ -2,7 +2,6 @@ package poc.graphql.jaxgs.core;
 
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -12,10 +11,9 @@ public class Field implements IBuildable {
     private ArgumentMap arguments;
     private List<Field> fields;
 
-
     @SafeVarargs
-    public static <Field> List<Field> selection(Field... f) {
-        return asList(f);
+    public static List<Field> selection(Field... fields) {
+        return asList(fields);
     }
     public static Field field(String name) {
         return new Field(name);
@@ -33,22 +31,22 @@ public class Field implements IBuildable {
     public Field(String name) {
         this.name = name;
         this.arguments = new ArgumentMap();
-        this.fields = new ArrayList<>();
+        this.fields = asList(new Field[0]);
     }
     public Field(String name, ArgumentMap args) {
         this.name = name;
         this.arguments = args;
-        this.fields = new ArrayList<>();
+        this.fields = asList(new Field[0]);
     }
     public Field(String name, List<Field> fields) {
         this.name = name;
         this.arguments = new ArgumentMap();
-        this.fields = new ArrayList<>(fields);
+        this.fields = fields;
     }
     public Field(String name, ArgumentMap args, List<Field> fields) {
         this.name = name;
         this.arguments = args;
-        this.fields = new ArrayList<>(fields);
+        this.fields = fields;
     }
 
     @Override

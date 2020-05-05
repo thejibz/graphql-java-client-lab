@@ -35,7 +35,7 @@ public class InputObject implements IBuildable, Cloneable {
             builder.append(":");
             builder.append(format(entry.getValue()));
             if (i < this.map.entrySet().size() - 1) {
-                builder.append(", ");
+                builder.append(",");
             }
             i++;
         }

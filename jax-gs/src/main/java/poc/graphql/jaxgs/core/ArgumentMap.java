@@ -30,7 +30,7 @@ public class ArgumentMap implements IBuildable {
             builder.append(":");
             builder.append(format(entry.getValue()));
             if (i < this.map.size() - 1) {
-                builder.append(", ");
+                builder.append(",");
             }
             i++;
         }
