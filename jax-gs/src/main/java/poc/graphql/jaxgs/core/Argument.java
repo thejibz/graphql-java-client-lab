@@ -15,7 +15,6 @@ public class Argument implements IBuildable {
     public static List<Argument> args(Argument... args) {
         return asList(args);
     }
-
     public static Argument arg(String name, Object value) {
         return new Argument(name, value);
     }

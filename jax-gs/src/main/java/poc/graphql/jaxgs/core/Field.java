@@ -18,9 +18,11 @@ public class Field implements IBuildable {
     public static Field field(String name) {
         return new Field(name);
     }
+    @SafeVarargs
     public static Field field(String name, Argument... args) {
         return new Field(name, args);
     }
+    @SafeVarargs
     public static Field field(String name, Field... fields) {
         return new Field(name, fields);
     }
@@ -33,11 +35,13 @@ public class Field implements IBuildable {
         this.arguments = asList(new Argument[0]);
         this.fields = asList(new Field[0]);
     }
+    @SafeVarargs
     public Field(String name, Argument... args) {
         this.name = name;
         this.arguments = asList(args);
         this.fields = asList(new Field[0]);
     }
+    @SafeVarargs
     public Field(String name, Field... fields) {
         this.name = name;
         this.arguments = asList(new Argument[0]);

@@ -15,30 +15,36 @@ public class Operation implements IBuildable {
     public static List<Operation> operations(Operation... operations) {
         return asList(operations);
     }
-    public static Operation operation(List<Field> fields) { return new Operation(fields); }
-    public static Operation operation(Type type, List<Field> fields) {
+    @SafeVarargs
+    public static Operation operation(Field... fields) { return new Operation(fields); }
+    @SafeVarargs
+    public static Operation operation(Type type, Field... fields) {
         return new Operation(type, fields);
     }
-    public static Operation operation(Type type, String name, List<Field> fields) {
+    @SafeVarargs
+    public static Operation operation(Type type, String name, Field... fields) {
         return new Operation(type, name, fields);
     }
 
-    public Operation(List<Field> fields) {
+    @SafeVarargs
+    public Operation(Field... fields) {
         this.type = Type.QUERY;
         this.name = "";
-        this.fields = fields;
+        this.fields = asList(fields);
     }
 
-    public Operation(Type type, List<Field> fields) {
+    @SafeVarargs
+    public Operation(Type type, Field... fields) {
         this.type = type;
         this.name = "";
-        this.fields = fields;
+        this.fields = asList(fields);
     }
 
-    public Operation(Type type, String name, List<Field> fields) {
+    @SafeVarargs
+    public Operation(Type type, String name, Field... fields) {
         this.type = type;
         this.name = name;
-        this.fields = fields;
+        this.fields = asList(fields);
     }
 
     @Override

@@ -16,7 +16,6 @@ import static poc.graphql.jaxgs.core.Field.fields;
 import static poc.graphql.jaxgs.core.InputObject.object;
 import static poc.graphql.jaxgs.core.InputObjectField.prop;
 import static poc.graphql.jaxgs.core.Operation.operation;
-import static poc.graphql.jaxgs.core.Operation.operations;
 import static poc.graphql.jaxgs.utils.AssertGraphql.assertSameRequests;
 import static poc.graphql.jaxgs.utils.Utils.getResourceFileContent;
 
@@ -66,10 +65,29 @@ public class NestedObjectsTest {
         Client client = ClientBuilder.newClient();
         client.withDocument(
                 document(
-                        operations(
-                                operation(Operation.Type.MUTATION, "nestedObjects", fields(
-                                        field("nestedObjectHolder", args(
-                                                arg("nestedObjectHolder", object_0)), fields(
+                        operation(Operation.Type.MUTATION, "nestedObjects",
+                                field("nestedObjectHolder", args(
+                                        arg("nestedObjectHolder", object_0)), fields(
+                                        field("level"),
+                                        field("name"),
+                                        field("levelLineage"),
+                                        field("nestedObjectLineage",
+                                                field("level"),
+                                                field("name"),
+                                                field("levelLineage"),
+                                                field("nestedObjectLineage",
+                                                        field("level"),
+                                                        field("name"),
+                                                        field("levelLineage"),
+                                                        field("nestedObjectLineage",
+                                                                field("level"),
+                                                                field("name"),
+                                                                field("levelLineage"),
+                                                                field("nestedObjectLineage",
+                                                                        field("level"),
+                                                                        field("name"),
+                                                                        field("levelLineage"))))),
+                                        field("nestedObject",
                                                 field("level"),
                                                 field("name"),
                                                 field("levelLineage"),
@@ -168,31 +186,11 @@ public class NestedObjectsTest {
                                                                                                         field("nestedObjectLineage",
                                                                                                                 field("level"),
                                                                                                                 field("name"),
-                                                                                                                field("levelLineage"))))),
-                                                                                field("nestedObject",
-                                                                                        field("level"),
-                                                                                        field("name"),
-                                                                                        field("levelLineage"),
-                                                                                        field("nestedObjectLineage",
-                                                                                                field("level"),
-                                                                                                field("name"),
-                                                                                                field("levelLineage"),
-                                                                                                field("nestedObjectLineage",
-                                                                                                        field("level"),
-                                                                                                        field("name"),
-                                                                                                        field("levelLineage"),
-                                                                                                        field("nestedObjectLineage",
-                                                                                                                field("level"),
-                                                                                                                field("name"),
-                                                                                                                field("levelLineage"),
-                                                                                                                field("nestedObjectLineage",
-                                                                                                                        field("level"),
-                                                                                                                        field("name"),
-                                                                                                                        field("levelLineage")))))))))))))))));
+                                                                                                                field("levelLineage")))))))))))))));
 
 
         String generatedRequest = client.getDocument().toString();
-        System.out.println(generatedRequest);
+        //System.out.println(generatedRequest);
         assertSameRequests(expectedRequest, generatedRequest);
     }
 }

@@ -17,7 +17,6 @@ import static poc.graphql.jaxgs.core.Field.fields;
 import static poc.graphql.jaxgs.core.InputObject.object;
 import static poc.graphql.jaxgs.core.InputObjectField.prop;
 import static poc.graphql.jaxgs.core.Operation.operation;
-import static poc.graphql.jaxgs.core.Operation.operations;
 import static poc.graphql.jaxgs.utils.AssertGraphql.assertSameRequests;
 import static poc.graphql.jaxgs.utils.Utils.getResourceFileContent;
 
@@ -30,73 +29,71 @@ public class ArraysTest {
         Client client = ClientBuilder.newClient();
         client.withDocument(
                 document(
-                        operations(
-                                operation(Operation.Type.QUERY, "arrayHolderQuery",
+                        operation(Operation.Type.QUERY, "arrayHolderQuery",
+                                field("arrayHolder",
+                                        args(
+                                                arg("arrayHolder", object(
+                                                        prop("boolPrimitiveArray", new boolean[]{true, false, true}),
+                                                        prop("boolObjectArray", new Boolean[]{true, false, true}),
+
+                                                        prop("bytePrimitiveArray", new byte[]{0, 2, 3}),
+                                                        prop("byteObjectArray", new Byte[]{0, 2, 3}),
+
+                                                        prop("shortPrimitiveArray", new short[]{78, 789, 645}),
+                                                        prop("shortObjectArray", new Short[]{78, 789, 645}),
+
+                                                        prop("intPrimitiveArray", new int[]{78, 65, 12354}),
+                                                        prop("intObjectArray", new Integer[]{78, 65, 12354}),
+
+                                                        prop("longPrimitiveArray", new long[]{789L, 947894L, 1874448L}),
+                                                        prop("longObjectArray", new Long[]{789L, 947894L, 1874448L}),
+
+                                                        prop("floatPrimitiveArray", new float[]{1567.654f, 8765f, 123789456.1851f}),
+                                                        prop("floatObjectArray", new Float[]{1567.654f, 8765f, 123789456.1851f}),
+
+                                                        prop("doublePrimitiveArray", new double[]{789.3242d, 1815d, 98765421.654897d}),
+                                                        prop("doubleObjectArray", new Double[]{789.3242d, 1815d, 98765421.654897d}),
+
+                                                        prop("bigIntegerArray", new BigInteger[]{BigInteger.ZERO, BigInteger.ONE, BigInteger.TEN}),
+                                                        prop("bigDecimalArray", new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.TEN}),
+
+                                                        prop("charPrimitiveArray", new char[]{'f', 'o', 'o'}),
+                                                        prop("charObjectArray", new Character[]{'f', 'o', 'o'}),
+
+                                                        prop("stringArray", new String[]{"foo", "bar", "baz"})
+                                                ))),
                                         fields(
-                                                field("arrayHolder",
-                                                        args(
-                                                                arg("arrayHolder", object(
-                                                                        prop("boolPrimitiveArray", new boolean[]{true, false, true}),
-                                                                        prop("boolObjectArray", new Boolean[]{true, false, true}),
+                                                field("boolPrimitiveArray"),
+                                                field("boolObjectArray"),
 
-                                                                        prop("bytePrimitiveArray", new byte[]{0, 2, 3}),
-                                                                        prop("byteObjectArray", new Byte[]{0, 2, 3}),
+                                                field("bytePrimitiveArray"),
+                                                field("byteObjectArray"),
 
-                                                                        prop("shortPrimitiveArray", new short[]{78, 789, 645}),
-                                                                        prop("shortObjectArray", new Short[]{78, 789, 645}),
+                                                field("shortPrimitiveArray"),
+                                                field("shortObjectArray"),
 
-                                                                        prop("intPrimitiveArray", new int[]{78, 65, 12354}),
-                                                                        prop("intObjectArray", new Integer[]{78, 65, 12354}),
+                                                field("intPrimitiveArray"),
+                                                field("intObjectArray"),
 
-                                                                        prop("longPrimitiveArray", new long[]{789L, 947894L, 1874448L}),
-                                                                        prop("longObjectArray", new Long[]{789L, 947894L, 1874448L}),
+                                                field("longPrimitiveArray"),
+                                                field("longObjectArray"),
 
-                                                                        prop("floatPrimitiveArray", new float[]{1567.654f, 8765f, 123789456.1851f}),
-                                                                        prop("floatObjectArray", new Float[]{1567.654f, 8765f, 123789456.1851f}),
+                                                field("floatPrimitiveArray"),
+                                                field("floatObjectArray"),
 
-                                                                        prop("doublePrimitiveArray", new double[]{789.3242d, 1815d, 98765421.654897d}),
-                                                                        prop("doubleObjectArray", new Double[]{789.3242d, 1815d, 98765421.654897d}),
+                                                field("doublePrimitiveArray"),
+                                                field("doubleObjectArray"),
 
-                                                                        prop("bigIntegerArray", new BigInteger[]{BigInteger.ZERO, BigInteger.ONE, BigInteger.TEN}),
-                                                                        prop("bigDecimalArray", new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.TEN}),
+                                                field("bigIntegerArray"),
+                                                field("bigDecimalArray"),
 
-                                                                        prop("charPrimitiveArray", new char[]{'f', 'o', 'o'}),
-                                                                        prop("charObjectArray", new Character[]{'f', 'o', 'o'}),
+                                                field("charPrimitiveArray"),
+                                                field("charObjectArray"),
 
-                                                                        prop("stringArray", new String[]{"foo", "bar", "baz"})
-                                                                ))),
-                                                        fields(
-                                                                field("boolPrimitiveArray"),
-                                                                field("boolObjectArray"),
-
-                                                                field("bytePrimitiveArray"),
-                                                                field("byteObjectArray"),
-
-                                                                field("shortPrimitiveArray"),
-                                                                field("shortObjectArray"),
-
-                                                                field("intPrimitiveArray"),
-                                                                field("intObjectArray"),
-
-                                                                field("longPrimitiveArray"),
-                                                                field("longObjectArray"),
-
-                                                                field("floatPrimitiveArray"),
-                                                                field("floatObjectArray"),
-
-                                                                field("doublePrimitiveArray"),
-                                                                field("doubleObjectArray"),
-
-                                                                field("bigIntegerArray"),
-                                                                field("bigDecimalArray"),
-
-                                                                field("charPrimitiveArray"),
-                                                                field("charObjectArray"),
-
-                                                                field("stringArray")
-                                                        )
-                                                )
-                                        )))));
+                                                field("stringArray")
+                                        )
+                                )
+                        )));
 
 
         String generatedRequest = client.getDocument().toString();
