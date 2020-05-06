@@ -121,13 +121,8 @@ public class NestedObjectsTest {
                                                                                                                                         selection(
                                                                                                                                                 field("level"),
                                                                                                                                                 field("name"),
-                                                                                                                                                field("levelLineage"))))))))))),
-                                                                field("nestedObject",
-                                                                        selection(
-                                                                                field("level"),
-                                                                                field("name"),
-                                                                                field("levelLineage"),
-                                                                                field("nestedObjectLineage",
+                                                                                                                                                field("levelLineage"))))))))),
+                                                                                field("nestedObject",
                                                                                         selection(
                                                                                                 field("level"),
                                                                                                 field("name"),
@@ -146,18 +141,13 @@ public class NestedObjectsTest {
                                                                                                                                         selection(
                                                                                                                                                 field("level"),
                                                                                                                                                 field("name"),
-                                                                                                                                                field("levelLineage"))))))))))),
-                                                                field("nestedObject",
-                                                                        selection(
-                                                                                field("level"),
-                                                                                field("name"),
-                                                                                field("levelLineage"),
-                                                                                field("nestedObjectLineage",
-                                                                                        selection(
-                                                                                                field("level"),
-                                                                                                field("name"),
-                                                                                                field("levelLineage"),
-                                                                                                field("nestedObjectLineage",
+                                                                                                                                                field("levelLineage"),
+                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                        selection(
+                                                                                                                                                                field("level"),
+                                                                                                                                                                field("name"),
+                                                                                                                                                                field("levelLineage"))))))))),
+                                                                                                field("nestedObject",
                                                                                                         selection(
                                                                                                                 field("level"),
                                                                                                                 field("name"),
@@ -171,23 +161,18 @@ public class NestedObjectsTest {
                                                                                                                                         selection(
                                                                                                                                                 field("level"),
                                                                                                                                                 field("name"),
-                                                                                                                                                field("levelLineage"))))))))))),
-                                                                field("nestedObject",
-                                                                        selection(
-                                                                                field("level"),
-                                                                                field("name"),
-                                                                                field("levelLineage"),
-                                                                                field("nestedObjectLineage",
-                                                                                        selection(
-                                                                                                field("level"),
-                                                                                                field("name"),
-                                                                                                field("levelLineage"),
-                                                                                                field("nestedObjectLineage",
-                                                                                                        selection(
-                                                                                                                field("level"),
-                                                                                                                field("name"),
-                                                                                                                field("levelLineage"),
-                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                field("levelLineage"),
+                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                        selection(
+                                                                                                                                                                field("level"),
+                                                                                                                                                                field("name"),
+                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                        selection(
+                                                                                                                                                                                field("level"),
+                                                                                                                                                                                field("name"),
+                                                                                                                                                                                field("levelLineage"))))))))),
+                                                                                                                field("nestedObject",
                                                                                                                         selection(
                                                                                                                                 field("level"),
                                                                                                                                 field("name"),
@@ -196,34 +181,49 @@ public class NestedObjectsTest {
                                                                                                                                         selection(
                                                                                                                                                 field("level"),
                                                                                                                                                 field("name"),
-                                                                                                                                                field("levelLineage"))))))))))),
-                                                                field("nestedObject",
-                                                                        selection(
-                                                                                field("level"),
-                                                                                field("name"),
-                                                                                field("levelLineage"),
-                                                                                field("nestedObjectLineage",
-                                                                                        selection(
-                                                                                                field("level"),
-                                                                                                field("name"),
-                                                                                                field("levelLineage"),
-                                                                                                field("nestedObjectLineage",
-                                                                                                        selection(
-                                                                                                                field("level"),
-                                                                                                                field("name"),
-                                                                                                                field("levelLineage"),
-                                                                                                                field("nestedObjectLineage",
-                                                                                                                        selection(
-                                                                                                                                field("level"),
-                                                                                                                                field("name"),
-                                                                                                                                field("levelLineage"),
-                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                field("levelLineage"),
+                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                        selection(
+                                                                                                                                                                field("level"),
+                                                                                                                                                                field("name"),
+                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                        selection(
+                                                                                                                                                                                field("level"),
+                                                                                                                                                                                field("name"),
+                                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                                        selection(
+                                                                                                                                                                                                field("level"),
+                                                                                                                                                                                                field("name"),
+                                                                                                                                                                                                field("levelLineage"))))))))),
+                                                                                                                                field("nestedObject",
                                                                                                                                         selection(
                                                                                                                                                 field("level"),
                                                                                                                                                 field("name"),
-                                                                                                                                                field("levelLineage")))))))))))
+                                                                                                                                                field("levelLineage"),
+                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                        selection(
+                                                                                                                                                                field("level"),
+                                                                                                                                                                field("name"),
+                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                        selection(
+                                                                                                                                                                                field("level"),
+                                                                                                                                                                                field("name"),
+                                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                                        selection(
+                                                                                                                                                                                                field("level"),
+                                                                                                                                                                                                field("name"),
+                                                                                                                                                                                                field("levelLineage"),
+                                                                                                                                                                                                field("nestedObjectLineage",
+                                                                                                                                                                                                        selection(
+                                                                                                                                                                                                                field("level"),
+                                                                                                                                                                                                                field("name"),
+                                                                                                                                                                                                                field("levelLineage")))))))))
 
-                                                        )))))));
+                                                                                                                                        )))))))))))))))));
 
 
         String generatedRequest = client.getDocument().toString();

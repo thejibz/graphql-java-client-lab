@@ -199,8 +199,8 @@ mutation nestedObjects {
                             }
                         }
                         nestedObject {
-                            name
                             level
+                            name
                             levelLineage
                             nestedObjectLineage {
                                 level
