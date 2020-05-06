@@ -1,6 +1,10 @@
 package poc.graphql.jaxgs.core;
 
-public class InputObjectField {
+import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
+
+import static poc.graphql.jaxgs.utils.ValueFormatter.format;
+
+public class InputObjectField implements IBuildable {
     private String name;
     private Object value;
 
@@ -11,6 +15,13 @@ public class InputObjectField {
     public InputObjectField(String name, Object value) {
         this.name = name;
         this.value = value;
+    }
+
+    @Override
+    public void build(StringBuilder builder) throws GraphQLBuilderException {
+        builder.append(this.name);
+        builder.append(":");
+        builder.append(format(this.value));
     }
 
     public String getName() {

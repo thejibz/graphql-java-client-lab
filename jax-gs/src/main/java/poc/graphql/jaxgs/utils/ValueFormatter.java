@@ -38,7 +38,7 @@ public class ValueFormatter {
         for (int i = 0; i < length; i++) {
             builder.append(format(Array.get(array, i)));
             if (i < length - 1) {
-                builder.append(", ");
+                builder.append(",");
             }
         }
         builder.append("]");

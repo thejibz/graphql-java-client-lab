@@ -2,13 +2,13 @@ package poc.graphql.jaxgs.core;
 
 import poc.graphql.jaxgs.exceptions.GraphQLBuilderException;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import static poc.graphql.jaxgs.utils.ValueFormatter.format;
+import static java.util.Arrays.asList;
 
 public class InputObject implements IBuildable, Cloneable {
-    private LinkedHashMap<String, Object> map = new LinkedHashMap();
+    private List<InputObjectField> inputObjectFields;
 
     @SafeVarargs
     public static InputObject object(InputObjectField... inputObjectFields) {
@@ -16,38 +16,33 @@ public class InputObject implements IBuildable, Cloneable {
     }
 
     @SafeVarargs
-    public InputObject(InputObjectField... m) {
-        for (InputObjectField field : m) {
-            this.map.put(field.getName(), field.getValue());
-        }
+    public InputObject(InputObjectField... inputObjectFields) {
+        this.inputObjectFields = asList(inputObjectFields);
     }
 
-    private InputObject(LinkedHashMap map) {
-        this.map = map;
+    public boolean add(InputObjectField inputObjectField) {
+        return this.inputObjectFields.add(inputObjectField);
     }
 
     @Override
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         builder.append("{");
-        int i = 0;
-        for (Map.Entry<String, Object> entry : this.map.entrySet()) {
-            builder.append(entry.getKey());
-            builder.append(":");
-            builder.append(format(entry.getValue()));
-            if (i < this.map.entrySet().size() - 1) {
+        InputObjectField[] inputObjectFields = this.inputObjectFields.toArray(new InputObjectField[0]);
+        for (int i = 0; i < inputObjectFields.length; i++) {
+            InputObjectField inputObjectField = inputObjectFields[i];
+            inputObjectField.build(builder);
+            if (i < inputObjectFields.length - 1) {
                 builder.append(",");
             }
-            i++;
         }
         builder.append("}");
     }
 
     @Override
-    public InputObject clone() {
-        return new InputObject((LinkedHashMap) this.map.clone());
-    }
+    public InputObject clone()  {
+        InputObject inputObject = new InputObject();
+        inputObject.inputObjectFields = new ArrayList<>(this.inputObjectFields);
 
-    public void add(InputObjectField prop) {
-        this.map.put(prop.getName(), prop.getValue());
+        return inputObject;
     }
 }

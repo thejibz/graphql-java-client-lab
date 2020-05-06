@@ -64,7 +64,7 @@ public class Field implements IBuildable {
             builder.append(")");
         }
 
-        // sub-fields to build ?
+        // Sub-fields to build ?
         if (!this.fields.isEmpty()) {
             builder.append("{");
             _buildFields(builder);

@@ -50,7 +50,7 @@ public class NestedObjectsTest {
                 prop("nestedObjectLineage", new InputObject[]{baseObject_0, baseObject_1, baseObject_2})
         );
 
-        InputObject object_3 = (InputObject) baseObject_3.clone();
+        InputObject object_3 = baseObject_3.clone();
         object_3.add(prop("nestedObject", null));
 
         InputObject object_2 = (InputObject) baseObject_2.clone();
