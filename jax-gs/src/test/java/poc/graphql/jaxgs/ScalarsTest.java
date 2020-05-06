@@ -10,10 +10,10 @@ import java.math.BigInteger;
 import java.net.URISyntaxException;
 
 import static poc.graphql.jaxgs.core.Argument.arg;
-import static poc.graphql.jaxgs.core.ArgumentMap.args;
+import static poc.graphql.jaxgs.core.Argument.args;
 import static poc.graphql.jaxgs.core.Document.document;
 import static poc.graphql.jaxgs.core.Field.field;
-import static poc.graphql.jaxgs.core.Field.selection;
+import static poc.graphql.jaxgs.core.Field.fields;
 import static poc.graphql.jaxgs.core.InputObject.object;
 import static poc.graphql.jaxgs.core.InputObjectField.prop;
 import static poc.graphql.jaxgs.core.Operation.operation;
@@ -32,7 +32,7 @@ public class ScalarsTest {
                 document(
                         operations(
                                 operation(Operation.Type.MUTATION, "scalarHolderMutation",
-                                        selection(
+                                        fields(
                                                 field("scalarHolder",
                                                         args(
                                                                 arg("scalarHolder", object(
@@ -65,7 +65,7 @@ public class ScalarsTest {
 
                                                                         prop("stringObject", "Hello World !")
                                                                 ))),
-                                                        selection(
+                                                        fields(
                                                                 field("booleanPrimitive"),
                                                                 field("booleanObject"),
 

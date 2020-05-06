@@ -15,22 +15,22 @@
  */
 package poc.mp.graphql.server.models;
 
-import org.eclipse.microprofile.graphql.DefaultValue;
-import org.eclipse.microprofile.graphql.Description;
-import org.eclipse.microprofile.graphql.Id;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.UUID;
 
 /**
  * Plain POJO with scalar fields
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class ScalarHolder {
+    // Boolean
+    private boolean booleanPrimitive;
+    private Boolean booleanObject;
+
+    // Byte
+    private byte bytePrimitive;
+    private Byte byteObject;
+
     // Short
     private short shortPrimitive;
     private Short shortObject;
@@ -50,20 +50,12 @@ public class ScalarHolder {
     // Double
     private double doublePrimitive;
     private Double doubleObject;
-
-    // Byte
-    private byte bytePrimitive;
-    private Byte byteObject;
     
     // BigInteger
     private BigInteger bigIntegerObject;
     
     // BigDecimal
     private BigDecimal bigDecimalObject;
-    
-    // Boolean
-    private boolean booleanPrimitive;
-    private Boolean booleanObject;
 
     // Character
     private char charPrimitive;
@@ -71,39 +63,41 @@ public class ScalarHolder {
 
     // String
     private String stringObject;
-    
-    // LocalDate
-    @DefaultValue("1978-07-03")
-    private LocalDate dateObject;
-    @Description("This is another date")
-    private LocalDate anotherDateObject;
-    
-    // LocalTime
-    private LocalTime timeObject;
-    @Description("This is another time")
-    private LocalTime anotherTimeObject;
-    
-    // LocalDateTime
-    private LocalDateTime dateTimeObject;
-    @Description("This is another datetime")
-    private LocalDateTime anotherDateTimeObject;
-    
-    // ID
-    @Id
-    private String id;
-    @Id
-    private long longPrimitiveId;
-    @Id
-    private Long longObjectId;
-    @Id
-    private int intPrimitiveId;
-    @Id
-    private Integer integerObjectId;
-    @Id
-    private UUID uuidId;
 
     public ScalarHolder() {
 
+    }
+
+    public boolean isBooleanPrimitive() {
+        return booleanPrimitive;
+    }
+
+    public void setBooleanPrimitive(boolean booleanPrimitive) {
+        this.booleanPrimitive = booleanPrimitive;
+    }
+
+    public Boolean getBooleanObject() {
+        return booleanObject;
+    }
+
+    public void setBooleanObject(Boolean booleanObject) {
+        this.booleanObject = booleanObject;
+    }
+
+    public byte getBytePrimitive() {
+        return bytePrimitive;
+    }
+
+    public void setBytePrimitive(byte bytePrimitive) {
+        this.bytePrimitive = bytePrimitive;
+    }
+
+    public Byte getByteObject() {
+        return byteObject;
+    }
+
+    public void setByteObject(Byte byteObject) {
+        this.byteObject = byteObject;
     }
 
     public short getShortPrimitive() {
@@ -186,22 +180,6 @@ public class ScalarHolder {
         this.doubleObject = doubleObject;
     }
 
-    public byte getBytePrimitive() {
-        return bytePrimitive;
-    }
-
-    public void setBytePrimitive(byte bytePrimitive) {
-        this.bytePrimitive = bytePrimitive;
-    }
-
-    public Byte getByteObject() {
-        return byteObject;
-    }
-
-    public void setByteObject(Byte byteObject) {
-        this.byteObject = byteObject;
-    }
-
     public BigInteger getBigIntegerObject() {
         return bigIntegerObject;
     }
@@ -216,22 +194,6 @@ public class ScalarHolder {
 
     public void setBigDecimalObject(BigDecimal bigDecimalObject) {
         this.bigDecimalObject = bigDecimalObject;
-    }
-
-    public boolean isBooleanPrimitive() {
-        return booleanPrimitive;
-    }
-
-    public void setBooleanPrimitive(boolean booleanPrimitive) {
-        this.booleanPrimitive = booleanPrimitive;
-    }
-
-    public Boolean getBooleanObject() {
-        return booleanObject;
-    }
-
-    public void setBooleanObject(Boolean booleanObject) {
-        this.booleanObject = booleanObject;
     }
 
     public char getCharPrimitive() {
@@ -257,101 +219,4 @@ public class ScalarHolder {
     public void setStringObject(String stringObject) {
         this.stringObject = stringObject;
     }
-
-    public LocalDate getDateObject() {
-        return dateObject;
-    }
-
-    public void setDateObject(LocalDate dateObject) {
-        this.dateObject = dateObject;
-    }
-
-    public LocalDate getAnotherDateObject() {
-        return anotherDateObject;
-    }
-
-    public void setAnotherDateObject(LocalDate anotherDateObject) {
-        this.anotherDateObject = anotherDateObject;
-    }
-
-    public LocalTime getTimeObject() {
-        return timeObject;
-    }
-
-    public void setTimeObject(LocalTime timeObject) {
-        this.timeObject = timeObject;
-    }
-
-    public LocalTime getAnotherTimeObject() {
-        return anotherTimeObject;
-    }
-
-    public void setAnotherTimeObject(LocalTime anotherTimeObject) {
-        this.anotherTimeObject = anotherTimeObject;
-    }
-
-    public LocalDateTime getDateTimeObject() {
-        return dateTimeObject;
-    }
-
-    public void setDateTimeObject(LocalDateTime dateTimeObject) {
-        this.dateTimeObject = dateTimeObject;
-    }
-
-    public LocalDateTime getAnotherDateTimeObject() {
-        return anotherDateTimeObject;
-    }
-
-    public void setAnotherDateTimeObject(LocalDateTime anotherDateTimeObject) {
-        this.anotherDateTimeObject = anotherDateTimeObject;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public long getLongPrimitiveId() {
-        return longPrimitiveId;
-    }
-
-    public void setLongPrimitiveId(long longPrimitiveId) {
-        this.longPrimitiveId = longPrimitiveId;
-    }
-
-    public Long getLongObjectId() {
-        return longObjectId;
-    }
-
-    public void setLongObjectId(Long longObjectId) {
-        this.longObjectId = longObjectId;
-    }
-
-    public int getIntPrimitiveId() {
-        return intPrimitiveId;
-    }
-
-    public void setIntPrimitiveId(int intPrimitiveId) {
-        this.intPrimitiveId = intPrimitiveId;
-    }
-
-    public Integer getIntegerObjectId() {
-        return integerObjectId;
-    }
-
-    public void setIntegerObjectId(Integer integerObjectId) {
-        this.integerObjectId = integerObjectId;
-    }
-
-    public UUID getUuidId() {
-        return uuidId;
-    }
-
-    public void setUuidId(UUID uuidId) {
-        this.uuidId = uuidId;
-    }
-
 }

@@ -15,11 +15,18 @@ public class Operation implements IBuildable {
     public static List<Operation> operations(Operation... operations) {
         return asList(operations);
     }
+    public static Operation operation(List<Field> fields) { return new Operation(fields); }
     public static Operation operation(Type type, List<Field> fields) {
         return new Operation(type, fields);
     }
     public static Operation operation(Type type, String name, List<Field> fields) {
         return new Operation(type, name, fields);
+    }
+
+    public Operation(List<Field> fields) {
+        this.type = Type.QUERY;
+        this.name = "";
+        this.fields = fields;
     }
 
     public Operation(Type type, List<Field> fields) {
