@@ -47,4 +47,20 @@ public class Document implements IBuildable {
 
         return builder.toString();
     }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
+    }
+
+    public List<Fragment> getFragments() {
+        return fragments;
+    }
+
+    public void setFragments(List<Fragment> fragments) {
+        this.fragments = fragments;
+    }
 }

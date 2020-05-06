@@ -20,10 +20,6 @@ public class InputObject implements IBuildable, Cloneable {
         this.inputObjectFields = asList(inputObjectFields);
     }
 
-    public boolean add(InputObjectField inputObjectField) {
-        return this.inputObjectFields.add(inputObjectField);
-    }
-
     @Override
     public void build(StringBuilder builder) throws GraphQLBuilderException {
         builder.append("{");
@@ -44,5 +40,13 @@ public class InputObject implements IBuildable, Cloneable {
         inputObject.inputObjectFields = new ArrayList<>(this.inputObjectFields);
 
         return inputObject;
+    }
+
+    public List<InputObjectField> getInputObjectFields() {
+        return inputObjectFields;
+    }
+
+    public void setInputObjectFields(List<InputObjectField> inputObjectFields) {
+        this.inputObjectFields = inputObjectFields;
     }
 }

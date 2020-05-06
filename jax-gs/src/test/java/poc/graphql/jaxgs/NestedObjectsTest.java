@@ -51,16 +51,16 @@ public class NestedObjectsTest {
         );
 
         InputObject object_3 = baseObject_3.clone();
-        object_3.add(prop("nestedObject", null));
+        object_3.getInputObjectFields().add(prop("nestedObject", null));
 
         InputObject object_2 = (InputObject) baseObject_2.clone();
-        object_2.add(prop("nestedObject", object_3));
+        object_2.getInputObjectFields().add(prop("nestedObject", object_3));
 
         InputObject object_1 = (InputObject) baseObject_1.clone();
-        object_1.add(prop("nestedObject", object_2));
+        object_1.getInputObjectFields().add(prop("nestedObject", object_2));
 
         InputObject object_0 = (InputObject) baseObject_0.clone();
-        object_0.add(prop("nestedObject", object_1));
+        object_0.getInputObjectFields().add(prop("nestedObject", object_1));
 
         Client client = ClientBuilder.newClient();
         client.withDocument(
